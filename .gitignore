@@ -1,0 +1,20 @@
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+media
+
+.DS_Store
+
+.vscode/* 
+
+
+node_modules
+
+migrations
+
+main.js.LICENSE.txt
+main.js
+credentials.py
