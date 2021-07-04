@@ -9,10 +9,10 @@ from django.http import JsonResponse
 class UsernameValidationView(View):
     def post(self, request):
         data = json.loads(request.body)
-        username = data('username')
+        username = data['username']
 
         if not str(username).isalnum():
-            return JsonResponse('username_error:username should only contain alphanumberic characters')
+            return JsonResponse({'username_error': 'username should only contain alphanumberic characters'})
         return JsonResponse({'username_valid': True})
 
 
