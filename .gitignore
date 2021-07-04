@@ -16,6 +16,5 @@ node_modules
 migrations
 
 main.js.LICENSE.txt
-main.js
 credentials.py
 

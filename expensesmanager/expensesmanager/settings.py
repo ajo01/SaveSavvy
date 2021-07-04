@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'expenses'
 ]
 
 MIDDLEWARE = [
@@ -122,7 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_DIRS = [os.path.join(BASE_DIR, 'expensesmanager/static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'expensesmanager/static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
