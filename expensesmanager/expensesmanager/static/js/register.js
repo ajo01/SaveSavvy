@@ -1,6 +1,7 @@
 console.log("register connected!");
 
 const usernameField = document.querySelector("#usernameField");
+const usernameFeedback = document.querySelector(".invalid-feedback");
 if (usernameField) {
   usernameField.addEventListener("keyup", (e) => {
     const usernameVal = e.target.value;
@@ -15,6 +16,8 @@ if (usernameField) {
           console.log(data);
           if (data.username_error) {
             usernameField.classList.add("is-invalid");
+            usernameFeedback.style.display = "block";
+            usernameFeedback.innerHTML = `<p>${data.username_error}</p>`;
           }
         });
     }
