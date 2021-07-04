@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
-    <title>TrulyExpenses {% block title %} {% endblock %}</title>
+    <title>Quickflow {% block title %} {% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{%static 'css/bootstrap.min.css'%}" rel="stylesheet" />
@@ -18,15 +18,16 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Create Expense</a>
-      <input
-        class="form-control form-control-dark w-100"
-        type="text"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <ul class="navbar-nav px-3">
+    <nav
+      class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow"
+    >
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
+        <span class="mx-3">Quickflow</span>
+      </a>
+      <ul
+        class="navbar-nav px-3"
+        style="display: flex; flex-direction: row; align-items: center"
+      >
         <li class="nav-item text-nowrap">
           <a class="nav-link" href="#">Sign out</a>
         </li>
@@ -56,13 +57,7 @@
           '<script src="/docs/4.4/static/js/vendor/jquery.slim.min.js"><\/script>'
         );
     </script>
-    {% comment %}
-    <script
-      src="/docs/4.4/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
-      crossorigin="anonymous"
-    ></script>
-    {% endcomment %}
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
     <script src="{% static 'js/main.js' %}"></script>
   </body>
