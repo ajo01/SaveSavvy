@@ -4,6 +4,6 @@ from django.views import View
 # Create your views here.
 
 
-class RegistertrationView(View):
+class RegistrationView(View):
     def get(self, request):
         return render(request, 'auth/register.html')
