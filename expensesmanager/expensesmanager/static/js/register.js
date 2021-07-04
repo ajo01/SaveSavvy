@@ -13,6 +13,9 @@ if (usernameField) {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
+          if (data.username_error) {
+            usernameField.classList.add("is-invalid");
+          }
         });
     }
   });
