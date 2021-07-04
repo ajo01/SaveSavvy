@@ -1,6 +1,8 @@
 Stack:
 Django, Bootstrap
 
-Commands:
+```bash
+# Commands
 cd expensesmanager
 python3 manage.py runserver
+```
