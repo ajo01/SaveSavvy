@@ -5,6 +5,8 @@ const usernameFeedback = document.querySelector(".invalid-feedback");
 const emailField = document.querySelector("#emailField");
 const emailFeedback = document.querySelector(".email-feedback");
 const usernameSuccessOutput = document.querySelector(".usernameSuccessOutput");
+const showPasswordToggle = document.querySelector(".showPasswordToggle");
+const passwordField = document.querySelector("#passwordField");
 
 if (usernameField) {
   usernameField.addEventListener("keyup", (e) => {
@@ -56,4 +58,16 @@ if (emailField) {
         });
     }
   });
+}
+
+const handlePasswordToggle = (e) => {
+  if (showPasswordToggle.textContent === "SHOW") {
+    showPasswordToggle.textContent = "HIDE";
+  } else {
+    showPasswordToggle.textContent = "SHOW";
+  }
+};
+
+if (showPasswordToggle) {
+  showPasswordToggle.addEventListener("click", handlePasswordToggle);
 }
