@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import View
 import json
 from django.http import JsonResponse
@@ -67,20 +67,24 @@ class RegistrationView(View):
                 return render(request, 'auth/register.html')
         return render(request, 'auth/register.html')
 
+    def send_email(email):
+        MyEmail = os.environ['EMAIL_HOST_USER']
+        MyPassword = os.environ['EMAIL_HOST_PASSWORD']
 
-def send_email(email):
-    MyEmail = os.environ['EMAIL_HOST_USER']
-    MyPassword = os.environ['EMAIL_HOST_PASSWORD']
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        server.login(MyEmail, MyPassword)
+        email_subject = "Activate your account"
+        email_body = "Test body"
+        msg = f"Subject: {email_subject}\n\n{email_body}"
+        # from MyEmail to email
+        server.sendmail(MyEmail, email, msg)
+        server.close()
+        print('Email has been sent')
 
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.ehlo()
-    server.starttls()
-    server.ehlo()
-    server.login(MyEmail, MyPassword)
-    email_subject = "Activate your account"
-    email_body = "Test body"
-    msg = f"Subject: {email_subject}\n\n{email_body}"
-    # from MyEmail to email
-    server.sendmail(MyEmail, email, msg)
-    server.close()
-    print('Email has been sent')
+
+class VerificationView(View):
+    def get(self, request, uid64, token):
+        return redirect('login')
