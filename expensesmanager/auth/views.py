@@ -44,4 +44,16 @@ class RegistrationView(View):
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
+        if not User.objects.filter(username=username).exists():
+            if not User.objects.filter(email=email).exists():
+                if len(password) < 6:
+                    messages.error(
+                        request, 'Password must be at least 6 characters long')
+                    return render(request, 'auth/register.html')
+                user = User.objects.create_user(username=username, email=email)
+                user.set_password(password)
+                user.save()
+                messages.success(
+                    request, 'Your account has been created!')
+                return render(request, 'auth/register.html')
         return render(request, 'auth/register.html')
