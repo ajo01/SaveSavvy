@@ -15,6 +15,7 @@ from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeEr
 from django.urls import reverse
 from .utils import token_generator
 
+
 # Create your views here.
 
 
@@ -101,3 +102,8 @@ def send_email(username, email, url):
 class VerificationView(View):
     def get(self, request, uid64, token):
         return redirect('login')
+
+
+class LoginView(View):
+    def get(self, request):
+        return render(request, 'auth/login.html')
