@@ -38,8 +38,10 @@ class RegistrationView(View):
         return render(request, 'auth/register.html')
 
     def post(self, request):
-        messages.success(request, "Success app")
-        messages.warning(request, "app warning")
-        messages.info(request, "app info")
-        messages.error(request, "error whatsapp")
+        # get user data
+        # validate
+        # create a user account
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
         return render(request, 'auth/register.html')
