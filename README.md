@@ -1,6 +1,8 @@
 Stack:
 Django, JavaScript, Bootstrap, and PostgreSQL
 
+status: ongoing
+
 ```bash
 # Commands
 cd expensesmanager
