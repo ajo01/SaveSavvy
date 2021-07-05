@@ -9,6 +9,12 @@ import smtplib
 from django.core.mail import EmailMessage
 import os
 
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
+from django.urls import reverse
+from .utils import token_generator
+
 # Create your views here.
 
 
@@ -59,6 +65,11 @@ class RegistrationView(View):
                 user.set_password(password)
                 user.is_active = False
                 user.save()
+
+                uid64 = force_bytes(urlsafe_base64_encode(user.pk))
+                domain = get_current_site(request).domain
+                link = reverse('activate', kwargs={
+                               'uid64': uid64, 'token': token_generator.make_token(user)})
 
                 send_email(email)
 
