@@ -1,5 +1,5 @@
 Stack:
-Django, Bootstrap
+Django, JavaScript, Bootstrap, and PostgreSQL
 
 ```bash
 # Commands

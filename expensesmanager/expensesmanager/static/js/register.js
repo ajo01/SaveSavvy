@@ -4,10 +4,13 @@ const usernameField = document.querySelector("#usernameField");
 const usernameFeedback = document.querySelector(".invalid-feedback");
 const emailField = document.querySelector("#emailField");
 const emailFeedback = document.querySelector(".email-feedback");
+const usernameSuccessOutput = document.querySelector(".usernameSuccessOutput");
 
 if (usernameField) {
   usernameField.addEventListener("keyup", (e) => {
     const usernameVal = e.target.value;
+    usernameSuccessOutput.style.display = "block";
+    usernameSuccessOutput.textContent = `Checking ${usernameVal}`;
     usernameField.classList.remove("is-invalid");
     usernameFeedback.style.display = "none";
 
@@ -19,6 +22,7 @@ if (usernameField) {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
+          usernameSuccessOutput.style.display = "none";
           if (data.username_error) {
             usernameField.classList.add("is-invalid");
             usernameFeedback.style.display = "block";
@@ -32,6 +36,7 @@ if (usernameField) {
 if (emailField) {
   emailField.addEventListener("keyup", (e) => {
     const emailVal = e.target.value;
+
     emailField.classList.remove("is-invalid");
     emailFeedback.style.display = "none";
 
