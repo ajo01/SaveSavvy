@@ -5,6 +5,9 @@ from django.http import JsonResponse
 from django.contrib.auth.models import User
 from validate_email import validate_email
 from django.contrib import messages
+import smtplib
+from django.core.mail import EmailMessage
+import os
 
 # Create your views here.
 
@@ -38,9 +41,7 @@ class RegistrationView(View):
         return render(request, 'auth/register.html')
 
     def post(self, request):
-        # get user data
-        # validate
-        # create a user account
+
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
@@ -56,8 +57,30 @@ class RegistrationView(View):
                     return render(request, 'auth/register.html', context)
                 user = User.objects.create_user(username=username, email=email)
                 user.set_password(password)
+                user.is_active = False
                 user.save()
+
+                MyEmail = os.environ['EMAIL_HOST_USER']
+                MyPassword = os.environ['EMAIL_HOST_PASSWORD']
+
+                server = smtplib.SMTP('smtp.gmail.com', 587)
+                server.ehlo()
+                server.starttls()
+                server.ehlo()
+                server.login(MyEmail, MyPassword)
+
+                email_subject = "Activate your account"
+                email_body = "Test body"
+                msg = f"Subject: {email_subject}\n\n{email_body}"
+
+                # from MyEmail to email
+                server.sendmail(MyEmail, email, msg)
+                server.close()
+                print('Email has been sent')
+
                 messages.success(
                     request, 'Your account has been created!')
                 return render(request, 'auth/register.html')
         return render(request, 'auth/register.html')
+
+# def send_email():
