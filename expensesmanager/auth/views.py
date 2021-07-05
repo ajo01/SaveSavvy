@@ -66,12 +66,13 @@ class RegistrationView(View):
                 user.is_active = False
                 user.save()
 
-                uid64 = force_bytes(urlsafe_base64_encode(user.pk))
+                uid64 = force_bytes(
+                    urlsafe_base64_encode(force_bytes(user.pk)))
                 domain = get_current_site(request).domain
                 link = reverse('activate', kwargs={
                                'uid64': uid64, 'token': token_generator.make_token(user)})
-
-                send_email(email)
+                activate_url = f"http://{domain}{link}"
+                send_email(user.username, email, activate_url)
 
                 messages.success(
                     request, 'Your account has been created!')
@@ -79,7 +80,7 @@ class RegistrationView(View):
         return render(request, 'auth/register.html')
 
 
-def send_email(email):
+def send_email(username, email, url):
     MyEmail = os.environ['EMAIL_HOST_USER']
     MyPassword = os.environ['EMAIL_HOST_PASSWORD']
     server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -88,7 +89,8 @@ def send_email(email):
     server.ehlo()
     server.login(MyEmail, MyPassword)
     email_subject = "Activate your account"
-    email_body = "Test body"
+
+    email_body = f"Hi {username},\n\n Please use this link to activate your account. \n {url}"
     msg = f"Subject: {email_subject}\n\n{email_body}"
     # from MyEmail to email
     server.sendmail(MyEmail, email, msg)
