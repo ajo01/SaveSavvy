@@ -10,7 +10,9 @@ def index(request):
     file_path = os.path.join(settings.BASE_DIR, 'currencies.json')
     with open(file_path, 'r') as json_file:
         data = json.load(json_file)
-        import pdb
-        pdb.set_trace()
+        for key, value in data.items():
+            currency_data.append({'name': key, 'value': value})
 
+    import pdb
+    pdb.set_trace()
     return render(request, 'preferences/index.html')
