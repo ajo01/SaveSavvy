@@ -13,6 +13,4 @@ def index(request):
         for key, value in data.items():
             currency_data.append({'name': key, 'value': value})
 
-    import pdb
-    pdb.set_trace()
-    return render(request, 'preferences/index.html')
+    return render(request, 'preferences/index.html', {'currencies': currency_data})
