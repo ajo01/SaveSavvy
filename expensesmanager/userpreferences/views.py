@@ -10,31 +10,6 @@ from django.contrib import messages
 
 
 def index(request):
-    # exists = UserPreference.objects.filter(user=request.user).exists()
-    # user_preference = None
-
-    # if exists:
-    #     user_preference = UserPreference.objects.get(user=request.user)
-
-    # if request.methods == 'GET':
-    #     currency_data = []
-    #     file_path = os.path.join(settings.BASE_DIR, 'currencies.json')
-    #     with open(file_path, 'r') as json_file:
-    #         data = json.load(json_file)
-    #         for key, value in data.items():
-    #             currency_data.append({'name': key, 'value': value})
-
-    #     return render(request, 'preferences/index.html', {'currencies': currency_data})
-
-    # # POST req
-    # else:
-    #     if exists:
-    #         currency = request.POST('currency')
-    #         user_preference.currency = currency
-    #         user_preference.save()
-    #     UserPreference.objects.create(user=request.user, currency=currency)
-    #     messages.success(request, 'Changes saved')
-
     currency_data = []
     file_path = os.path.join(settings.BASE_DIR, 'currencies.json')
 
