@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from validate_email import validate_email
 from django.contrib import messages
 import smtplib
-from django.core.mail import EmailMessage
 import os
 
 from django.contrib.sites.shortcuts import get_current_site
@@ -101,6 +100,22 @@ def send_email(username, email, url):
 
 class VerificationView(View):
     def get(self, request, uid64, token):
+        try:
+            id = force_text(urlsafe_base64_decode(uid64))
+            user = User.objects.get(pk=id)
+
+            if not token_generator.check_token(user, token):
+                return redirect('login'+'?message='+'User already activated')
+            if user.is_active:
+                return redirect('login')
+            user.is_active = True
+            user.save()
+
+            messages.success(request, 'Account activated!')
+            return redirect('login')
+        except Exception as ex:
+            print('something went wrong....')
+            pass
         return redirect('login')
 
 
