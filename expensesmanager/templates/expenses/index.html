@@ -1,8 +1,15 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container">
-    {% include 'partials/_messages.html' %}
-    <h1>Expenses index</h1>
+  {% include 'partials/_messages.html' %}
+  <h1>Expenses index</h1>
+  <nav aria-label="breadcrumb" style="background: #e8e8e8">
+    <ol class="breadcrumb p-2">
+      <li class="breadcrumb-item">
+        <a href="">Expenses</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">My Expenses</li>
+    </ol>
+  </nav>
 </div>
-
 
 {% endblock %}
