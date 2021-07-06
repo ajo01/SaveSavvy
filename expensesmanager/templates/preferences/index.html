@@ -1,9 +1,11 @@
 {% extends 'base.html' %} {% block content %}
 
-<div class="container mt-4 w-100" >
+<div class="container mt-2 w-100" >
     <h5>Preferred Currency</h5>
-<hr />
-    <div class="input-group mt-4" >
+    <hr />
+<form action="{% url 'preferences'%}" method="post">
+    {% csrf_token %}
+    <div class="input-group mt-4 py-2" >
         <select class="custom-select" style="width: 90%;" id="inputGroupSelect04">
           <option selected>Choose...</option>
           {% for currency in currencies %}
@@ -11,9 +13,10 @@
           {% endfor %}
         </select>
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary p-2" type="button">Button</button>
+          <input class="btn btn-outline-secondary px-4" type="submit" value="Save"/>
         </div>
       </div>
+    </form>
 </div>
 
 {% endblock %}
