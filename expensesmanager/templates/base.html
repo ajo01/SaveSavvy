@@ -29,11 +29,14 @@
         style="display: flex; flex-direction: row; align-items: center"
       >
         <li class="nav-item text-nowrap">
-        <form action="{% url 'logout' %}" method="POST">
-          {% csrf_token %}
-          <input class="text text-capitalize" type="submit" value="Sign Out">
-        </form>
-
+          <form action="{% url 'logout' %}" method="POST">
+            {% csrf_token %}
+            <input
+              class="text text-capitalize"
+              type="submit"
+              value="Sign Out"
+            />
+          </form>
         </li>
       </ul>
     </nav>
@@ -42,7 +45,7 @@
       <div class="row">
         {% include 'partials/_sidebar.html'%}
 
-        <main role="main" class="px-5 py-2">
+        <main role="main" class="px-5 mt-4">
           <div style="margin-left: 12rem">
             {% block content %} {% endblock %}
           </div>
