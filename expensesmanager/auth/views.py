@@ -13,6 +13,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
 from django.urls import reverse
 from .utils import token_generator
+from django.contrib import auth
 
 
 # Create your views here.
@@ -122,4 +123,25 @@ class VerificationView(View):
 
 class LoginView(View):
     def get(self, request):
+        return render(request, 'auth/login.html')
+
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+
+        if username and password:
+            user = auth.authenticate(username=username, password=password)
+            if user:
+                if user.is_active:
+                    auth.login(request, user)
+                    messages.success(request, 'Welcome, ' +
+                                     user.username+'! You are now logged in.')
+                messages.error(
+                    request, 'Account is not active. Please check your email.')
+                return render(request, 'auth/login.html')
+            messages.error(
+                request, 'Invalid credentials.')
+            return render(request, 'auth/login.html')
+        messages.error(
+            request, 'Please fill in all fields.')
         return render(request, 'auth/login.html')
