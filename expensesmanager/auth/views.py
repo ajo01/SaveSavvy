@@ -99,37 +99,25 @@ def send_email(username, email, url):
 
 class VerificationView(View):
     def get(self, request, uid64, token):
-        id = force_text(urlsafe_base64_decode(uid64))
-        user = User.objects.get(pk=id)
 
-        if not token_generator.check_token(user, token):
-            return redirect('login'+'?message='+'User already activated')
-        if user.is_active:
+        try:
+            id = force_text(urlsafe_base64_decode(uid64))
+            user = User.objects.get(pk=id)
+
+            if not token_generator.check_token(user, token):
+                return redirect('login'+'?message='+'User already activated')
+            if user.is_active:
+                return redirect('login')
+            user.is_active = True
+            user.save()
+
+            messages.success(request, 'Account activated!')
+            print('account activated!')
             return redirect('login')
-        user.is_active = True
-        user.save()
-
-        messages.success(request, 'Account activated!')
-        print('account activated!')
+        except Exception as ex:
+            print('something went wrong....')
+            pass
         return redirect('login')
-        # try:
-        #     id = urlsafe_base64_decode(uid64).decode()
-        #     user = User.objects.get(pk=id)
-
-        #     if not token_generator.check_token(user, token):
-        #         return redirect('login'+'?message='+'User already activated')
-        #     if user.is_active:
-        #         return redirect('login')
-        #     user.is_active = True
-        #     user.save()
-
-        #     messages.success(request, 'Account activated!')
-        #     print('account activated!')
-        #     return redirect('login')
-        # except Exception as ex:
-        #     print('something went wrong....')
-        #     pass
-        # return redirect('login')
 
 
 class LoginView(View):
