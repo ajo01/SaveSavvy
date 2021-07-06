@@ -29,7 +29,11 @@
         style="display: flex; flex-direction: row; align-items: center"
       >
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
+        <form action="{% url 'logout' %}" method="POST">
+          {% csrf_token %}
+          <input class="text text-capitalize" type="submit" value="Sign Out">
+        </form>
+
         </li>
       </ul>
     </nav>

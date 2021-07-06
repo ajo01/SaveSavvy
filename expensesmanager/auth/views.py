@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views import View
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse, request
 from django.contrib.auth.models import User
 from validate_email import validate_email
 from django.contrib import messages
@@ -146,3 +146,10 @@ class LoginView(View):
         messages.error(
             request, 'Please fill in all fields.')
         return render(request, 'auth/login.html')
+
+
+class LogoutView(View):
+    def post(self, request):
+        auth.logout(request)
+        messages.success(request, 'You have been logged out')
+        return redirect('login')
