@@ -1,6 +1,7 @@
 from django.contrib.auth import login
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from .models import Category, Expense
 
 # Create your views here.
 
@@ -11,4 +12,8 @@ def index(request):
 
 
 def add_expense(request):
-    return render(request, 'expenses/add_expense.html')
+    categories = Category.objects.all()
+    context = {
+        'categories': categories
+    }
+    return render(request, 'expenses/add_expense.html', context)
