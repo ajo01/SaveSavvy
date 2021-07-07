@@ -2,6 +2,7 @@ from django.contrib.auth import login
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .models import Category, Expense
+from django.contrib import messages
 
 # Create your views here.
 
@@ -14,6 +15,18 @@ def index(request):
 def add_expense(request):
     categories = Category.objects.all()
     context = {
-        'categories': categories
+        'categories': categories,
+        # get access to previous inputs
+        'values': request.POST
     }
-    return render(request, 'expenses/add_expense.html', context)
+    if request.method == 'GET':
+        return render(request, 'expenses/add_expense.html', context)
+
+    if request.method == 'POST':
+        amount = request.POST['amount']
+        description = request.POST['description']
+        if not amount or description:
+            messages.error(request, 'Please fill in all fields')
+            return render(request, 'expenses/add_expense.html', context)
+
+        return render(request, 'expenses/add_expense.html', context)
