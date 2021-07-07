@@ -1,5 +1,5 @@
 from django.contrib.auth import login
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from .models import Category, Expense
 from django.contrib import messages
@@ -24,9 +24,20 @@ def add_expense(request):
 
     if request.method == 'POST':
         amount = request.POST['amount']
-        description = request.POST['description']
-        if not amount or description:
-            messages.error(request, 'Please fill in all fields')
+        if not amount:
+            messages.error(request, 'Amount is a required field')
             return render(request, 'expenses/add_expense.html', context)
 
-        return render(request, 'expenses/add_expense.html', context)
+        description = request.POST['description']
+        date = request.POST['expense_date']
+        category = request.POST['category']
+
+        description = request.POST['description']
+        if not description:
+            messages.error(request, 'Description is a required field')
+            return render(request, 'expenses/add_expense.html', context)
+
+    Expense.objects.create(owner=request.user,
+                           amount=amount, description=description, category=category, date=date)
+    messages.success(request, 'Expense saved successfully')
+    return redirect('expenses')

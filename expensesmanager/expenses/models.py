@@ -19,8 +19,10 @@ class Expense(models.Model):
     def __str__(self):
         return self.category
 
-    class Meta:
-        ordering: ['-date']
+
+Expense.objects.order_by('date')
+# class Meta:
+#     ordering: ['date']
 
 
 class Category(models.Model):
