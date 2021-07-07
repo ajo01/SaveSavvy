@@ -2,8 +2,8 @@
 
 <div class="container mt-2">
     <h1>Add Expense</h1>
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
+  <nav aria-label="breadcrumb" style="background: #ededed">
+    <ol class="breadcrumb p-2">
       <li class="breadcrumb-item">
         <a href="{% url 'expenses'%}">Expenses</a>
       </li>
@@ -15,7 +15,7 @@
     <div class="card-body">
       <form action="{% url 'add-expenses' %}" method="post">
         {% include 'partials/_messages.html'%} {% csrf_token %}
-        <div class="form-group">
+        <div class="form-group py-2">
           <label for="">Amount</label>
           <input
             type="text"
@@ -24,7 +24,7 @@
             value="{{values.amount}}"
           />
         </div>
-        <div class="form-group">
+        <div class="form-group py-2">
           <label for="">Description</label>
           <input
             type="text"
@@ -33,14 +33,14 @@
             value="{{values.description}}"
           />
         </div>
-        <div class="form-group">
+        <div class="form-group py-2">
           <label for="">Category</label>
           <select class="form-control" name="category">
             <option name="category">1</option>
             <option name="category">2</option>
           </select>
         </div>
-        <div class="form-group">
+        <div class="form-group py-2">
           <label for="">Date of Expense</label>
           <input
             type="date"
@@ -52,7 +52,7 @@
         <input
           type="submit"
           value="Submit"
-          class="btn btn-primary btn-primary-sm"
+          class="btn btn-primary btn-primary-sm mt-2"
         />
       </form>
     </div>
