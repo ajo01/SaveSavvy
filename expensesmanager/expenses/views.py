@@ -49,7 +49,7 @@ def add_expense(request):
 
 
 def expense_edit(request, id):
-    expense = Expense.objects.filter(pk=id)
+    expense = Expense.objects.get(pk=id)
     categories = Category.objects.all()
     context = {
         'expense': expense,

@@ -13,7 +13,7 @@
 
   <div class="card">
     <div class="card-body">
-      <form action="{% url 'add-expenses' %}" method="post">
+      <form action="{% url 'expense-edit'  expense.id %}" method="post">
         {% include 'partials/_messages.html'%} {% csrf_token %}
         <div class="form-group py-2">
           <label for="">Amount</label>
