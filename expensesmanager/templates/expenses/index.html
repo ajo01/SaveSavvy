@@ -30,6 +30,7 @@
         <th>Description</th>
         <th>Date</th>
         <th></th>
+        <th></th>
         </tr>
       </thead>
       <tbody>
@@ -40,6 +41,7 @@
           <td>{{expense.description}}</td>
           <td>{{expense.date}}</td>
           <td><a href="{% url 'expense-edit' expense.id  %}" class="btn btn-secondary btn-sm">Edit</a></td>
+          <td><img  src="{% static 'img/trash-alt.svg' %}" alt="delete" height="20px"></i></td>
         </tr>
         {% endfor %}
       </tbody>
