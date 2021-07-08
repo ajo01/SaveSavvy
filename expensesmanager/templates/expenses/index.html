@@ -41,7 +41,9 @@
           <td>{{expense.description}}</td>
           <td>{{expense.date}}</td>
           <td><a href="{% url 'expense-edit' expense.id  %}"><img img src="{% static 'img/edit.svg' %}" alt="edit" height="18px"></img></a> </td>
-          <td><img src="{% static 'img/trash-alt.svg' %}" alt="delete" height="18px"></img></td>
+          <td> <a href="{% url 'expense-delete' expense.id  %}">
+            <img src="{% static 'img/trash-alt.svg' %}" alt="delete" height="18px"></img>
+          </a></td>
         </tr>
         {% endfor %}
       </tbody>

@@ -17,6 +17,7 @@ def index(request):
     return render(request, 'expenses/index.html', context)
 
 
+@login_required(login_url='/auth/login')
 def add_expense(request):
     categories = Category.objects.all()
     context = {
