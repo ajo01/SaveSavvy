@@ -1,18 +1,23 @@
 from django.contrib.auth import login
+from django.core import paginator
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from .models import Category, Expense
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 # Create your views here.
 
 
 @login_required(login_url='/auth/login')
 def index(request):
-    categories = Category.objects.all()
     expenses = Expense.objects.filter(owner=request.user)
+    paginator = Paginator(expenses, 10)
+    page_number = request.GET.get('page')
+    page_obj = Paginator.get_page(paginator, page_number)
     context = {
         'expenses': expenses,
+        'page_obj': page_obj
     }
     return render(request, 'expenses/index.html', context)
 
@@ -49,6 +54,7 @@ def add_expense(request):
     return redirect('expenses')
 
 
+@login_required(login_url='/auth/login')
 def expense_edit(request, id):
     expense = Expense.objects.get(pk=id)
     categories = Category.objects.all()
@@ -86,6 +92,7 @@ def expense_edit(request, id):
         return redirect('expenses')
 
 
+@login_required(login_url='/auth/login')
 def expense_delete(request, id):
     expense = Expense.objects.get(pk=id)
     expense.delete()
