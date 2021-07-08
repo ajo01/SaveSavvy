@@ -46,3 +46,16 @@ def add_expense(request):
                            amount=amount, description=description, category=category, date=date)
     messages.success(request, 'Expense saved successfully')
     return redirect('expenses')
+
+
+def expense_edit(request, id):
+    expenses = Expense.objects.filter(pk=id)
+    context = {
+        'expense': expenses
+    }
+
+    if request.method == 'GET':
+        return render(request, 'expenses/edit-expense.html', context)
+    else:
+        messages.info(request, "Handling post form")
+        return render(request, 'expenses/edit-expense.html', context)
