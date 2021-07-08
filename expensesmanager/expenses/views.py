@@ -49,9 +49,10 @@ def add_expense(request):
 
 
 def expense_edit(request, id):
-    expenses = Expense.objects.filter(pk=id)
+    expense = Expense.objects.filter(pk=id)
     context = {
-        'expense': expenses
+        'expense': expense,
+        'values': expense
     }
 
     if request.method == 'GET':
