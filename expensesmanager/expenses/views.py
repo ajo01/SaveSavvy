@@ -56,7 +56,7 @@ def expense_edit(request, id):
     }
 
     if request.method == 'GET':
-        return render(request, 'expenses/edit-expense.html', context)
+        return render(request, 'expenses/edit_expense.html', context)
     else:
         messages.info(request, "Handling post form")
-        return render(request, 'expenses/edit-expense.html', context)
+        return render(request, 'expenses/edit_expense.html', context)
