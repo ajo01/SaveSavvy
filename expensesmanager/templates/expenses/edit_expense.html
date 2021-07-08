@@ -36,7 +36,9 @@
         <div class="form-group py-2">
           <label for="">Category</label>
           <select class="form-control" name="category">
-            <option selected>Select a Category</option>
+            <option selected name="category" value="{{values.category}}">
+              {{values.category}}
+            </option>
             {% for category in categories%}
             <option name="category" value="{{category.name}}">
               {{category.name}}
@@ -48,6 +50,7 @@
           <label for="">Date of Expense</label>
           <input
             type="date"
+            value="{{values.date |date:'Y-m-d' }}"
             class="form-control form-control-sm"
             name="expense_date"
           />
