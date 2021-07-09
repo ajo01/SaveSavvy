@@ -14,7 +14,7 @@ from django.urls import reverse
 from .utils import token_generator
 from django.contrib import auth
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-
+from django.core.mail import EmailMessage
 
 # Create your views here.
 
@@ -166,45 +166,39 @@ class PasswordResetEmailView(View):
         context = {
             'values': request.POST
         }
+        # user email
         email = request.POST['email']
 
         if not validate_email(email):
             messages.error(request, 'Please submit a valid email')
             return render(request, 'auth/reset-password.html', context)
 
-        users = User.objects.filter(email=email)
-        if users.exists():
-            user = users[0]
-            uid64 = urlsafe_base64_encode(force_bytes(user.pk))
-            domain = get_current_site(request).domain
-            token = PasswordResetTokenGenerator.make_token(user)
+        domain = get_current_site(request).domain
+        user = User.objects.filter(email=email)
+        if user.exists():
+            email_contents = {
+                'user': user[0],
+                'domain': domain,
+                'uid': urlsafe_base64_encode(force_bytes(user[0].pk)),
+                'token': PasswordResetTokenGenerator().make_token(user[0])
+            }
             link = reverse('reset-password', kwargs={
-                'uid64': uid64, 'token': token})
+                'uid64': email_contents['uid'], 'token': email_contents['token']})
             reset_url = f"http://{domain}{link}"
 
-            send_password_reset_email(user.username, email, reset_url)
+            email_subject = "Reset your password"
+            email_body = f"Hi {user[0].username},\n\n Please use this link to reset your password. \n {reset_url}"
+            email = EmailMessage(
+                email_subject,
+                email_body,
+                os.environ['EMAIL_HOST_USER'],
+                [email]
+            )
+            email.send(fail_silently=False)
             messages.success(request, 'We have sent an email')
             return render(request, 'auth/reset-password.html', context)
         messages.error(request, 'This email does not exist')
         return render(request, 'auth/reset-password.html', context)
-
-
-def send_password_reset_email(username, email, url):
-    MyEmail = os.environ['EMAIL_HOST_USER']
-    MyPassword = os.environ['EMAIL_HOST_PASSWORD']
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.ehlo()
-    server.starttls()
-    server.ehlo()
-    server.login(MyEmail, MyPassword)
-    email_subject = "Reset your password"
-
-    email_body = f"Hi {username},\n\n Please use this link to reset your password. \n {url}"
-    msg = f"Subject: {email_subject}\n\n{email_body}"
-    # from MyEmail to email
-    server.sendmail(MyEmail, email, msg)
-    server.close()
-    print('Email has been sent')
 
 
 class NewPasswordView(View):
