@@ -172,14 +172,17 @@ class PasswordResetEmailView(View):
             messages.error(request, 'Please submit a valid email')
             return render(request, 'auth/reset-password.html', context)
 
-        user = User.objects.filter(email=email)
-        if user.exists():
+        users = User.objects.filter(email=email)
+        if users.exists():
+            user = users[0]
             uid64 = urlsafe_base64_encode(force_bytes(user.pk))
             domain = get_current_site(request).domain
-            link = reverse('activate', kwargs={
-                'uid64': uid64, 'token': token_generator.make_token(user)})
-            activate_url = f"http://{domain}{link}"
-            send_password_reset_email(user.username, email, activate_url)
+            token = PasswordResetTokenGenerator.make_token(user)
+            link = reverse('reset-password', kwargs={
+                'uid64': uid64, 'token': token})
+            reset_url = f"http://{domain}{link}"
+
+            send_password_reset_email(user.username, email, reset_url)
             messages.success(request, 'We have sent an email')
             return render(request, 'auth/reset-password.html', context)
         messages.error(request, 'This email does not exist')
@@ -202,3 +205,11 @@ def send_password_reset_email(username, email, url):
     server.sendmail(MyEmail, email, msg)
     server.close()
     print('Email has been sent')
+
+
+class NewPasswordView(View):
+    def get(self, request, uid64, token):
+        return render(request, 'auth/set-new-password.html')
+
+    def post(self, request, uid64, token):
+        return render(request, 'auth/set-new-password.html')
