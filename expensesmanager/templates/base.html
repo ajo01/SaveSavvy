@@ -24,11 +24,18 @@
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
         <span class="mx-3">SaveSavvy</span>
       </a>
+
       <ul
         class="navbar-nav px-3"
         style="display: flex; flex-direction: row; align-items: center"
       >
-        <li class="nav-item text-nowrap">
+        <li class="nav-item text-nowrap" style="margin-right: 2rem;">
+        <a href="" action="nav-link">
+          ({{request.user.username}})
+        </a>
+      </li>
+
+      <li class="nav-item text-nowrap mt-3">
           <form action="{% url 'logout' %}" method="POST">
             {% csrf_token %}
             <input
