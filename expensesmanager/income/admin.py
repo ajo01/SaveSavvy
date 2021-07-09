@@ -2,5 +2,11 @@ from django.contrib import admin
 from .models import Income, Source
 
 # Register your models here.
-admin.site.register(Income)
+
+
+class IncomeAdmin(admin.ModelAdmin):
+    list_display = ('amount', 'date', 'description', 'source')
+
+
+admin.site.register(Income, IncomeAdmin)
 admin.site.register(Source)

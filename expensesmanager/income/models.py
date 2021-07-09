@@ -15,7 +15,7 @@ class Income(models.Model):
 
     # show category in queryset
     def __str__(self):
-        return self.category
+        return self.source
 
     class Meta:
         verbose_name_plural = "Income"
