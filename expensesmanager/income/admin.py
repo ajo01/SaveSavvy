@@ -6,6 +6,8 @@ from .models import Income, Source
 
 class IncomeAdmin(admin.ModelAdmin):
     list_display = ('amount', 'date', 'description', 'source')
+    search_fields = ('amount', 'date', 'description', 'source')
+    list_per_page = 10
 
 
 admin.site.register(Income, IncomeAdmin)
