@@ -1,4 +1,4 @@
-from django.contrib.auth import login
+
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from .models import Category, Expense
