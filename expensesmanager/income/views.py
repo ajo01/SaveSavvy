@@ -38,9 +38,9 @@ def index(request):
 
 @login_required(login_url='/auth/login')
 def add_income(request):
-    categories = Source.objects.all()
+    sources = Source.objects.all()
     context = {
-        'categories': categories,
+        'sources': sources,
         # get access to previous inputs
         'values': request.POST
     }
@@ -71,11 +71,11 @@ def add_income(request):
 @login_required(login_url='/auth/login')
 def income_edit(request, id):
     income = Income.objects.get(pk=id)
-    categories = Source.objects.all()
+    sources = Source.objects.all()
     context = {
         'income': income,
         'values': income,
-        'categories': categories
+        'sources': sources
     }
 
     if request.method == 'GET':
