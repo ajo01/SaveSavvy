@@ -1,19 +1,19 @@
 from django.shortcuts import redirect, render
 from django.views import View
 import json
-from django.http import JsonResponse, request
+from django.http import JsonResponse
 from django.contrib.auth.models import User
 from validate_email import validate_email
 from django.contrib import messages
 import smtplib
 import os
-
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
+from django.utils.encoding import force_bytes, force_text
 from django.urls import reverse
 from .utils import token_generator
 from django.contrib import auth
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 
 # Create your views here.
@@ -72,7 +72,7 @@ class RegistrationView(View):
                 link = reverse('activate', kwargs={
                                'uid64': uid64, 'token': token_generator.make_token(user)})
                 activate_url = f"http://{domain}{link}"
-                send_email(user.username, email, activate_url)
+                send_activation_email(user.username, email, activate_url)
 
                 messages.success(
                     request, 'Your account has been created!')
@@ -80,7 +80,7 @@ class RegistrationView(View):
         return render(request, 'auth/register.html')
 
 
-def send_email(username, email, url):
+def send_activation_email(username, email, url):
     MyEmail = os.environ['EMAIL_HOST_USER']
     MyPassword = os.environ['EMAIL_HOST_PASSWORD']
     server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -162,4 +162,43 @@ class PasswordResetEmailView(View):
         return render(request, 'auth/reset-password.html')
 
     def post(self, request):
-        return render(request, 'auth/reset-password.html')
+
+        context = {
+            'values': request.POST
+        }
+        email = request.POST['email']
+
+        if not validate_email(email):
+            messages.error(request, 'Please submit a valid email')
+            return render(request, 'auth/reset-password.html', context)
+
+        user = User.objects.filter(email=email)
+        if user.exists():
+            uid64 = urlsafe_base64_encode(force_bytes(user.pk))
+            domain = get_current_site(request).domain
+            link = reverse('activate', kwargs={
+                'uid64': uid64, 'token': token_generator.make_token(user)})
+            activate_url = f"http://{domain}{link}"
+            send_password_reset_email(user.username, email, activate_url)
+            messages.success(request, 'We have sent an email')
+            return render(request, 'auth/reset-password.html', context)
+        messages.error(request, 'This email does not exist')
+        return render(request, 'auth/reset-password.html', context)
+
+
+def send_password_reset_email(username, email, url):
+    MyEmail = os.environ['EMAIL_HOST_USER']
+    MyPassword = os.environ['EMAIL_HOST_PASSWORD']
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+    server.ehlo()
+    server.login(MyEmail, MyPassword)
+    email_subject = "Reset your password"
+
+    email_body = f"Hi {username},\n\n Please use this link to reset your password. \n {url}"
+    msg = f"Subject: {email_subject}\n\n{email_body}"
+    # from MyEmail to email
+    server.sendmail(MyEmail, email, msg)
+    server.close()
+    print('Email has been sent')
