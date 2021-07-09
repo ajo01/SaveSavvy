@@ -17,6 +17,9 @@ class Income(models.Model):
     def __str__(self):
         return self.category
 
+    class Meta:
+        verbose_name_plural = "Income"
+
 
 class Source(models.Model):
     name = models.CharField(max_length=255)
