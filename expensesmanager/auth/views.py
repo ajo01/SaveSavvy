@@ -220,4 +220,19 @@ class NewPasswordView(View):
             'uid64': uid64,
             'token': token
         }
-        return render(request, 'auth/set-new-password.html', context)
+        password = request.POST['password']
+        password2 = request.POST['password2']
+
+        if password != password2:
+            messages.error(request, 'Passwords do not match')
+            return render(request, 'auth/set-new-password.html', context)
+        if len(password) < 6:
+            messages.error(
+                request, 'Password must be at least 6 characters long')
+            return render(request, 'auth/set-new-password.html', context)
+        user_id = force_text(urlsafe_base64_decode(uid64))
+        user = User.objects.get(pk=user_id)
+        user.password = password
+        user.save()
+        messages.success(request, 'Password has been saved')
+        return redirect('login')
