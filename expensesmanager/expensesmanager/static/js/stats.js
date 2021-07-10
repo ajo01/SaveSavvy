@@ -1,6 +1,6 @@
 var ctx = document.getElementById("myChart").getContext("2d");
 var myChart = new Chart(ctx, {
-  type: "bar",
+  type: "doughnut",
   data: {
     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
     datasets: [
@@ -28,9 +28,10 @@ var myChart = new Chart(ctx, {
     ],
   },
   options: {
-    scales: {
-      y: {
-        beginAtZero: true,
+    plugins: {
+      title: {
+        display: true,
+        text: "Expenses per category",
       },
     },
   },
