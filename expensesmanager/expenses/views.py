@@ -27,7 +27,7 @@ def search_expenses(request):
 @login_required(login_url='/auth/login')
 def index(request):
     expenses = Expense.objects.filter(owner=request.user)
-    paginator = Paginator(expenses, 5)
+    paginator = Paginator(expenses, 10)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
     currency = UserPreference.objects.get(user=request.user).currency
@@ -117,6 +117,7 @@ def expense_delete(request, id):
     return redirect('expenses')
 
 
+@login_required(login_url='/auth/login')
 def expense_category_summary(request):
     today_date = datetime.date.today()
     six_months_ago = today_date-datetime.timedelta(days=30*6)
@@ -126,6 +127,7 @@ def expense_category_summary(request):
 
     def get_category(expense):
         return expense.category
+    category_list = list(set(map(get_category, expenses)))
 
     def get_category_amount(category):
         amount = 0
@@ -133,8 +135,6 @@ def expense_category_summary(request):
         for item in filtered_by_category:
             amount += item.amount
         return amount
-
-    category_list = list(set(map(get_category, expenses)))
 
     for ex in expenses:
         for y in category_list:
