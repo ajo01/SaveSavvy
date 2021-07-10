@@ -5,9 +5,10 @@ from .models import Category, Expense
 from django.contrib import messages
 from django.core.paginator import Paginator
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from userpreferences.models import UserPreference
 import datetime
+import csv
 
 # Create your views here.
 
@@ -144,3 +145,16 @@ def expense_category_summary(request):
 
 def stats_view(request):
     return render(request, 'expenses/stats.html')
+
+
+def export_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=Expenses' + \
+        str(datetime.datetime.now())+'.csv'
+    writer = csv.writer(response)
+    writer.writerow(['Amount', 'Description', 'Category', 'Date'])
+    expenses = Expense.objects.filter(owner=request.user)
+    for expense in expenses:
+        writer.writerow([expense.amount, expense.description,
+                        expense.category, expense.date])
+    return response
