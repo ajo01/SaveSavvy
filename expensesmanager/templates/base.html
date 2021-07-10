@@ -30,16 +30,20 @@
         style="display: flex; flex-direction: row; align-items: center"
       >
         <li class="nav-item text-nowrap" style="margin-right: 2rem;">
-        <a href="" action="nav-link">
-          ({{request.user.username}})
+        <a href="" action="nav-link" class="text-decoration-none text-white">
+          {{request.user.username}}
         </a>
+      </li>
+
+      <li class="nav-item text-nowrap text-white" style="margin-right: 2rem;">
+          {{request.user.email}}
       </li>
 
       <li class="nav-item text-nowrap mt-3">
           <form action="{% url 'logout' %}" method="POST">
             {% csrf_token %}
             <input
-              class="text text-capitalize"
+              class="btn btn-secondary"
               type="submit"
               value="Sign Out"
             />
