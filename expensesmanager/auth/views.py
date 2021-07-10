@@ -209,7 +209,15 @@ def send_password_reset_email(username, email, url):
 
 class NewPasswordView(View):
     def get(self, request, uid64, token):
-        return render(request, 'auth/set-new-password.html')
+        context = {
+            'uid64': uid64,
+            'token': token
+        }
+        return render(request, 'auth/set-new-password.html', context)
 
     def post(self, request, uid64, token):
-        return render(request, 'auth/set-new-password.html')
+        context = {
+            'uid64': uid64,
+            'token': token
+        }
+        return render(request, 'auth/set-new-password.html', context)
