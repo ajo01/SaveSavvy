@@ -121,7 +121,7 @@ def expense_category_summary(request):
     today_date = datetime.date.today()
     six_months_ago = today_date-datetime.timedelta(days=30*6)
     expenses = Expense.objects.filter(owner=request.user,
-                                      date__gte=six_months_ago, date_lte=today_date)
+                                      date__gte=six_months_ago, date__lte=today_date)
     final_rep = {}
 
     def get_category(expense):
@@ -138,7 +138,7 @@ def expense_category_summary(request):
 
     for ex in expenses:
         for y in category_list:
-            final_rep[ex] = get_category_amount(y)
+            final_rep[y] = get_category_amount(y)
     return JsonResponse({'expense_category_data': final_rep}, safe=False)
 
 
