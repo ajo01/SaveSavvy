@@ -43,10 +43,15 @@ const getChartData = () => {
   console.log("fetching");
   fetch("/expense-summary")
     .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
+    .then((results) => {
+      console.log(results);
+      const category_data = results.expense_category_data;
+      const [labels, data] = [
+        Object.keys(category_data),
+        Object.values(category_data),
+      ];
 
-      renderChart([], []);
+      renderChart(data, labels);
     });
 };
 
