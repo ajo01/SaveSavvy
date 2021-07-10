@@ -6,6 +6,7 @@ from django.contrib import messages
 from .models import Source, Income
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
+import datetime
 # Create your views here.
 
 
@@ -112,3 +113,32 @@ def income_delete(request, id):
     income.delete()
     messages.success(request, 'Income removed')
     return redirect('income')
+
+
+@login_required(login_url='/auth/login')
+def income_source_summary(request):
+    today_date = datetime.date.today()
+    six_months_ago = today_date-datetime.timedelta(days=30*12)
+    income_list = Income.objects.filter(owner=request.user,
+                                        date__gte=six_months_ago, date__lte=today_date)
+    final_rep = {}
+
+    def get_source(income):
+        return income.source
+    source_list = list(set(map(get_source, income_list)))
+
+    def get_source_amount(source):
+        amount = 0
+        filtered_by_source = income_list.filter(source=source)
+        for item in filtered_by_source:
+            amount += item.amount
+        return amount
+
+    for ex in income_list:
+        for y in source_list:
+            final_rep[y] = get_source_amount(y)
+    return JsonResponse({'income_source_data': final_rep}, safe=False)
+
+
+def stats_view(request):
+    return render(request, 'income/stats.html')

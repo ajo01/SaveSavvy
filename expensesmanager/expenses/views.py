@@ -120,7 +120,7 @@ def expense_delete(request, id):
 @login_required(login_url='/auth/login')
 def expense_category_summary(request):
     today_date = datetime.date.today()
-    six_months_ago = today_date-datetime.timedelta(days=30*6)
+    six_months_ago = today_date-datetime.timedelta(days=30*12)
     expenses = Expense.objects.filter(owner=request.user,
                                       date__gte=six_months_ago, date__lte=today_date)
     final_rep = {}
