@@ -19,6 +19,7 @@ class Income(models.Model):
 
     class Meta:
         verbose_name_plural = "Income"
+        ordering = ['-date']
 
 
 class Source(models.Model):
