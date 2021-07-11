@@ -11,6 +11,8 @@ import datetime
 import csv
 import xlwt
 
+from dateutil.relativedelta import relativedelta
+
 # Create your views here.
 
 
@@ -123,11 +125,10 @@ def expense_delete(request, id):
 # returns amount by category
 def expense_category_summary(request):
     today_date = datetime.date.today()
-    year_ago = today_date-datetime.timedelta(days=30*12)
+    six_months_ago = today_date-datetime.timedelta(days=30*6)
     expenses = Expense.objects.filter(owner=request.user,
-                                      date__gte=year_ago, date__lte=today_date)
+                                      date__gte=six_months_ago, date__lte=today_date)
     final_rep = {}
-    line_rep = {}
 
     def get_category(expense):
         return expense.category
@@ -145,14 +146,30 @@ def expense_category_summary(request):
             final_rep[y] = get_category_amount(y)
 
     # return amount by month
-    def get_date(expense):
-        return expense.date.month
-    date_list = list(set(map(get_date, expenses)))
+    line_rep = {}
+
+    def get_prev_6_months():
+        l = [None]*6
+        six_months_prev = datetime.date.today() - relativedelta(months=6)
+        five_months_prev = datetime.date.today() - relativedelta(months=5)
+        four_months_prev = datetime.date.today() - relativedelta(months=4)
+        three_months_prev = datetime.date.today() - relativedelta(months=3)
+        two_months_prev = datetime.date.today() - relativedelta(months=2)
+        one_month_prev = datetime.date.today() - relativedelta(months=1)
+        l[0] = six_months_prev.month
+        l[1] = five_months_prev.month
+        l[2] = four_months_prev.month
+        l[3] = three_months_prev.month
+        l[4] = two_months_prev.month
+        l[5] = one_month_prev.month
+        return l
+
+    date_list = get_prev_6_months()
 
     def get_month_amount(month):
         amount = 0
         month_first = datetime.date.today().replace(day=1, month=month)
-        month_last = today_date+datetime.timedelta(days=30)
+        month_last = month_first+datetime.timedelta(days=30)
         filtered_by_month = expenses.filter(
             date__gte=month_first, date__lte=month_last)
         for item in filtered_by_month:
