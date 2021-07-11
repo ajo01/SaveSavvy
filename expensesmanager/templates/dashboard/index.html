@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
+<link href="{%static 'css/main.css'%}" rel="stylesheet" />
 <div class="container">
   <div class="row">
     <div class="col-md-8">
@@ -12,7 +13,7 @@
     </div>
 
     <div class="col-md-3">
-      <a href="{% url 'add-expenses' %}" class="btn btn-primary">Add Expense</a>
+      <a href="{% url 'add-expenses' %}" class="add-btn btn">Add Expense</a>
     </div>
   </div>
 
@@ -30,8 +31,8 @@
     </div>
 
   <div class="app-table">
-    <table class="table table-striped table-hover mt-3">
-      <thead class="bg-dark text-white">
+    <table class="table table-striped table-hover table-bordered mt-3">
+      <thead>
         <tr>
         <th>Amount ({{currency}})</th>
         <th>Category</th>

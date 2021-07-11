@@ -21,3 +21,16 @@
 .showPasswordToggle:hover {
   transform: scale(1.2);
 }
+
+.add-btn {
+  border-radius: 15px;
+  color: rgb(0, 186, 186);
+  border: 2px solid rgb(0, 186, 186);
+  font-weight: 600;
+}
+
+.add-btn:hover {
+  color: rgb(0, 223, 223);
+  border: 2px solid rgb(0, 223, 223);
+  transition: 0.4s ease-in-out;
+}
