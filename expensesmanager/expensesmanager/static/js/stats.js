@@ -33,21 +33,15 @@ const renderChart = (data, labels) => {
 const renderLineChart = (data, labels) => {
   var ctx = document.getElementById("lineChart").getContext("2d");
   var myChart = new Chart(ctx, {
-    type: "bar",
+    type: "line",
     data: {
       labels: labels,
       datasets: [
         {
           label: "Expenses by month",
           data: data,
-          backgroundColor: [
-            "rgb(75, 192, 192)", //teal
-            "rgb(255, 99, 132)", //pink
-            "rgb(54, 162, 235)", //blue
-            "rgb(255, 206, 86)", //yellow
-            "rgb(255, 159, 64)", //orange
-            "rgb(153, 102, 255)", //purple
-          ],
+          borderColor: "rgb(54, 162, 235)",
+          borderWidth: "5",
         },
       ],
     },
