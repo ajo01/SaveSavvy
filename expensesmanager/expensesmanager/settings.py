@@ -42,7 +42,8 @@ INSTALLED_APPS = [
 
     'expenses',
     'userpreferences',
-    'income'
+    'income',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
