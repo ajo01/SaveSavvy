@@ -14,9 +14,6 @@
       "
     >
       <span>Home</span>
-      <a class="d-flex align-items-center text-muted" href="#">
-        <span data-feather="plus-circle"></span>
-      </a>
     </h6>
     <ul class="nav flex-column">
       <li class="nav-item">
@@ -39,20 +36,17 @@
         text-muted"
     >
       <span>Records</span>
-      <a class="d-flex align-items-center text-muted" href="#">
-        <span data-feather="plus-circle"></span>
-      </a>
     </h6>
     <ul class="nav flex-column">
       <li class="nav-item">
         <a class="nav-link" href="{% url 'expenses'%}">
-          <span data-feather="file"></span>
+          <span data-feather="dollar-sign"></span>
           Expenses
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'income' %}">
-          <span data-feather="shopping-cart"></span>
+          <span data-feather="file-text"></span>
           Income
         </a>
       </li>
@@ -71,20 +65,17 @@
       "
     >
       <span>Summary</span>
-      <a class="d-flex align-items-center text-muted" href="#">
-        <span data-feather="plus-circle"></span>
-      </a>
     </h6>
     <ul class="nav flex-column mb-2">
       <li class="nav-item">
         <a class="nav-link" href="{% url 'expense-stats' %}">
-          <span data-feather="file-text"></span>
+          <span data-feather="trending-up"></span>
           Expenses Summary
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'income-stats'%}">
-          <span data-feather="file-text"></span>
+          <span data-feather="bar-chart"></span>
           Income Summary
         </a>
       </li>
@@ -95,3 +86,6 @@
 </nav>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+<script>
+  feather.replace()
+</script>
