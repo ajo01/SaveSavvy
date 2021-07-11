@@ -35,7 +35,7 @@
     </div>
 
   <div class="app-table">
-    <table class="table table-striped table-bordered table-hover mt-3">
+    <table class="table table-striped table-hover mt-3">
       <thead>
         <tr>
         <th>Amount ({{currency}})</th>
@@ -53,9 +53,11 @@
           <td>{{income.source}}</td>
           <td>{{income.description}}</td>
           <td>{{income.date}}</td>
-          <td><a href="{% url 'edit-income' income.id  %}"><img img src="{% static 'img/edit.svg' %}" alt="edit" height="18px"></img></a> </td>
-          <td> <a href="{% url 'delete-income' income.id  %}">
-            <img src="{% static 'img/trash-alt.svg' %}" alt="delete" height="18px"></img>
+
+
+          <td class="center-td"><a href="{% url 'edit-income' income.id  %}" class="btn edit-btn">Edit</a></td>
+          <td class="center-td"> <a href="{% url 'delete-income' income.id  %}" class="btn delete-btn" >
+            X
           </a></td>
         </tr>
         {% endfor %}

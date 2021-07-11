@@ -92,3 +92,10 @@
 .center-td {
   text-align: center;
 }
+.table {
+  border: 1px solid #dee2e6;
+}
+
+td {
+  vertical-align: middle;
+}
