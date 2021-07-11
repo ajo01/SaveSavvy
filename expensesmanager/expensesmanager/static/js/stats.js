@@ -6,7 +6,7 @@ const renderChart = (data, labels) => {
       labels: labels,
       datasets: [
         {
-          label: "Expenses from the past year",
+          label: "Expenses from the past 6 months",
           data: data,
           backgroundColor: [
             "rgb(75, 192, 192)", //teal
@@ -30,34 +30,42 @@ const renderChart = (data, labels) => {
   });
 };
 
-var ctx = document.getElementById("lineChart").getContext("2d");
-var myChart = new Chart(ctx, {
-  type: "bar",
-  data: {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-    datasets: [
-      {
-        label: "# of Votes",
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          "rgb(75, 192, 192)", //teal
-          "rgb(255, 99, 132)", //pink
-          "rgb(54, 162, 235)", //blue
-          "rgb(255, 206, 86)", //yellow
-          "rgb(255, 159, 64)", //orange
-          "rgb(153, 102, 255)", //purple
-        ],
-      },
-    ],
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true,
+const renderLineChart = (data, labels) => {
+  var ctx = document.getElementById("lineChart").getContext("2d");
+  var myChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Expenses by month",
+          data: data,
+          backgroundColor: [
+            "rgb(75, 192, 192)", //teal
+            "rgb(255, 99, 132)", //pink
+            "rgb(54, 162, 235)", //blue
+            "rgb(255, 206, 86)", //yellow
+            "rgb(255, 159, 64)", //orange
+            "rgb(153, 102, 255)", //purple
+          ],
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+        x: {
+          title: {
+            display: true,
+            text: "Months ago",
+          },
+        },
       },
     },
-  },
-});
+  });
+};
 
 const getChartData = () => {
   fetch("/expense-summary")
@@ -69,8 +77,14 @@ const getChartData = () => {
         Object.keys(category_data),
         Object.values(category_data),
       ];
+      const month_data = results.expense_month_data;
+      const [lineLabels, lineData] = [
+        Object.keys(month_data),
+        Object.values(month_data),
+      ];
 
       renderChart(data, labels);
+      renderLineChart(lineData, lineLabels);
     });
 };
 
