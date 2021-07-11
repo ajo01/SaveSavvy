@@ -127,6 +127,7 @@ def expense_category_summary(request):
     expenses = Expense.objects.filter(owner=request.user,
                                       date__gte=year_ago, date__lte=today_date)
     final_rep = {}
+    line_rep = {}
 
     def get_category(expense):
         return expense.category
@@ -142,7 +143,27 @@ def expense_category_summary(request):
     for ex in expenses:
         for y in category_list:
             final_rep[y] = get_category_amount(y)
-    return JsonResponse({'expense_category_data': final_rep}, safe=False)
+
+    # return amount by month
+    def get_date(expense):
+        return expense.date.month
+    date_list = list(set(map(get_date, expenses)))
+
+    def get_month_amount(month):
+        amount = 0
+        month_first = datetime.date.today().replace(day=1, month=month)
+        month_last = today_date+datetime.timedelta(days=30)
+        filtered_by_month = expenses.filter(
+            date__gte=month_first, date__lte=month_last)
+        for item in filtered_by_month:
+            amount += item.amount
+        return amount
+
+    for ex in expenses:
+        for y in date_list:
+            line_rep[y] = get_month_amount(y)
+
+    return JsonResponse({'expense_category_data': final_rep, 'expense_month_data': line_rep}, safe=False)
 
 
 @login_required(login_url='/auth/login')
