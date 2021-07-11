@@ -1,4 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
 <div class="container">
   <div class="row">
     <div class="col-md-8">
@@ -53,9 +55,9 @@
           <td>{{expense.category}}</td>
           <td>{{expense.description}}</td>
           <td>{{expense.date}}</td>
-          <td><a href="{% url 'expense-edit' expense.id  %}"><img img src="{% static 'img/edit.svg' %}" alt="edit" height="18px"></img></a> </td>
-          <td> <a href="{% url 'expense-delete' expense.id  %}">
-            <img src="{% static 'img/trash-alt.svg' %}" alt="delete" height="18px"></img>
+          <td><a href="{% url 'expense-edit' expense.id  %}"><i height="18px" class="fas fa-edit" ></i></a> </td>
+          <td> <a href="{% url 'expense-delete' expense.id  %}" class="mx-auto">
+            <i height="18px" class="fas fa-trash-alt" ></i>
           </a></td>
         </tr>
         {% endfor %}

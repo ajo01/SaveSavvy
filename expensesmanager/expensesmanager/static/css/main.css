@@ -60,3 +60,11 @@
   border: 2px solid #d268ff;
   transition: 0.4s ease-in-out;
 }
+
+.fa-trash-alt {
+  color: #e80000;
+}
+
+.fa-edit {
+  color: #00d595;
+}
