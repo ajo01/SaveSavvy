@@ -9,6 +9,7 @@ from django.shortcuts import redirect, render
 import datetime
 import csv
 import xlwt
+from dateutil.relativedelta import relativedelta
 # Create your views here.
 
 
@@ -136,10 +137,46 @@ def income_source_summary(request):
             amount += item.amount
         return amount
 
-    for ex in income_list:
+    for inc in income_list:
         for y in source_list:
             final_rep[y] = get_source_amount(y)
-    return JsonResponse({'income_source_data': final_rep}, safe=False)
+
+     # return amount by month
+    line_rep = {}
+
+    def get_prev_6_months():
+        l = [None]*6
+        six_months_prev = datetime.date.today() - relativedelta(months=6)
+        five_months_prev = datetime.date.today() - relativedelta(months=5)
+        four_months_prev = datetime.date.today() - relativedelta(months=4)
+        three_months_prev = datetime.date.today() - relativedelta(months=3)
+        two_months_prev = datetime.date.today() - relativedelta(months=2)
+        one_month_prev = datetime.date.today() - relativedelta(months=1)
+        l[0] = six_months_prev.month
+        l[1] = five_months_prev.month
+        l[2] = four_months_prev.month
+        l[3] = three_months_prev.month
+        l[4] = two_months_prev.month
+        l[5] = one_month_prev.month
+        return l
+
+    date_list = get_prev_6_months()
+
+    def get_month_amount(month):
+        amount = 0
+        month_first = datetime.date.today().replace(day=1, month=month)
+        month_last = month_first+datetime.timedelta(days=30)
+        filtered_by_month = income_list.filter(
+            date__gte=month_first, date__lte=month_last)
+        for item in filtered_by_month:
+            amount += item.amount
+        return amount
+
+    for inc in income_list:
+        for y in date_list:
+            line_rep[y] = get_month_amount(y)
+
+    return JsonResponse({'income_source_data': final_rep, 'income_month_data': line_rep}, safe=False)
 
 
 def stats_view(request):

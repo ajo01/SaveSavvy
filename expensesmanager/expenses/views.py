@@ -10,7 +10,6 @@ from userpreferences.models import UserPreference
 import datetime
 import csv
 import xlwt
-
 from dateutil.relativedelta import relativedelta
 
 # Create your views here.
