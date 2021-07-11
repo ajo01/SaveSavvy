@@ -6,6 +6,8 @@ const noResults = document.querySelector(".no-results");
 const paginationContainer = document.querySelector(".pagination-container");
 const tbody = document.querySelector(".table-body");
 
+console.log("searchExpense connected");
+
 searchField.addEventListener("keyup", (e) => {
   const searchValue = e.target.value;
   tbody.innerHTML = "";
