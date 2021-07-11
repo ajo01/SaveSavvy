@@ -55,9 +55,9 @@
           <td>{{expense.category}}</td>
           <td>{{expense.description}}</td>
           <td>{{expense.date}}</td>
-          <td><a href="{% url 'expense-edit' expense.id  %}"><i height="18px" class="fas fa-edit" ></i></a> </td>
-          <td> <a href="{% url 'expense-delete' expense.id  %}" class="mx-auto">
-            <i height="18px" class="fas fa-trash-alt" ></i>
+          <td class="center-td"><a href="{% url 'expense-edit' expense.id  %}" class="btn edit-btn">Edit</a></td>
+          <td class="center-td"> <a href="{% url 'expense-delete' expense.id  %}" class="btn delete-btn" >
+            X
           </a></td>
         </tr>
         {% endfor %}
