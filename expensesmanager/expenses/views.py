@@ -185,9 +185,3 @@ def export_excel(request):
             ws.write(row_num, col_num, str(row[col_num]), font_style)
     wb.save(response)
     return response
-
-
-def export_pdf(request):
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=Expenses' + \
-        str(datetime.datetime.now())+'.pdf'
