@@ -62,7 +62,7 @@ const renderLineChart = (data, labels) => {
 };
 
 const getChartData = () => {
-  fetch("/expense-summary")
+  fetch("/expense/expense-summary")
     .then((res) => res.json())
     .then((results) => {
       console.log(results);
