@@ -24,13 +24,39 @@
 
 .add-btn {
   border-radius: 15px;
-  color: rgb(0, 186, 186);
-  border: 2px solid rgb(0, 186, 186);
+  color: rgb(0, 191, 191);
+  border: 2px solid rgb(0, 191, 191);
   font-weight: 600;
 }
 
 .add-btn:hover {
   color: rgb(0, 223, 223);
   border: 2px solid rgb(0, 223, 223);
+  transition: 0.4s ease-in-out;
+}
+
+.csv-btn {
+  border-radius: 15px;
+  color: #bd23ff;
+  border: 2px solid #bd23ff;
+  font-weight: 600;
+}
+
+.csv-btn:hover {
+  color: #d268ff;
+  border: 2px solid #d268ff;
+  transition: 0.4s ease-in-out;
+}
+
+.excel-btn {
+  border-radius: 15px;
+  color: #4823ff;
+  border: 2px solid #4823ff;
+  font-weight: 600;
+}
+
+.excel-btn:hover {
+  color: #d268ff;
+  border: 2px solid #d268ff;
   transition: 0.4s ease-in-out;
 }
