@@ -89,6 +89,19 @@
   transition: 0.2s ease-in-out;
 }
 
+.submit-btn {
+  border-radius: 15px;
+  color: #008ad5;
+  border: 2px solid #008ad5;
+  font-weight: 600;
+}
+
+.submit-btn:hover {
+  color: #0067d5;
+  border: 2px solid #0067d5;
+  transition: 0.2s ease-in-out;
+}
+
 .center-td {
   text-align: center;
 }
