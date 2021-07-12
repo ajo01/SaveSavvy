@@ -99,3 +99,19 @@
 td {
   vertical-align: middle;
 }
+
+.alert {
+  color: white;
+}
+
+.alert-success {
+  background: #1abc9c;
+}
+
+.alert-danger {
+  background: #e83600;
+}
+
+.alert-info {
+  background: #d268ff;
+}
