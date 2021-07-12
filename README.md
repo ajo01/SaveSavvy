@@ -17,4 +17,4 @@ python3 manage.py runserver
 Images from website:
 ![](expensesmanager/expensesmanager/static/img/demo/dashboard.png?raw=true)
 ![](expensesmanager/expensesmanager/static/img/demo/expenses.png?raw=true)
-![](expensesmanager/expensesmanager/static/img/demo/expense-stats.png?raw=true)
+![](expensesmanager/expensesmanager/static/img/demo/exp-stats.png?raw=true)
